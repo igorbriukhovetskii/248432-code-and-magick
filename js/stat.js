@@ -6,7 +6,7 @@
 //  - координату по оси Y левого-верхнего угла: topLeftY,
 //  - ширину поля статистики: statisticsFieldWidth,
 //  - высоту поля статистики: statisticsFieldHeight
-function drawStatisticsField(ctx,topLeftX, topLeftY, statisticsFieldWidth, statisticsFieldHeight) {
+function drawStatisticsField(ctx, topLeftX, topLeftY, statisticsFieldWidth, statisticsFieldHeight) {
   //  Отрисовка тени поля с результатами
   ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
   ctx.fillRect(topLeftX + 10, topLeftY + 10, statisticsFieldWidth, statisticsFieldHeight);
