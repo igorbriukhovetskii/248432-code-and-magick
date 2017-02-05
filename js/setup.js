@@ -42,17 +42,9 @@ var fireballColors = [
 var currentFireballColorIndex = 0;
 //  Вычисление длины массива цветов файербола
 var fireballColorsLength = fireballColors.length;
-//  Функция, открывающая окно настройки пресонажа
-function openSetup() {
-  if (setupWindow.classList.contains('invisible')) {
-    setupWindow.classList.remove('invisible');
-  }
-}
-//  Функция, закрывающая окно настройки персонажа
-function closeSetup() {
-  if (!(setupWindow.classList.contains('invisible'))) {
-    setupWindow.classList.add('invisible');
-  }
+//  Функция, открывающая/закрывающая окно настройки пресонажа
+function toggleSetup() {
+  setupWindow.classList.toggle('invisible');
 }
 /**
  * Функия, изменяющая цвет <svg> элемента
@@ -60,28 +52,28 @@ function closeSetup() {
  * @param {object} element - DOM-элемент
  */
 function changeElementFill(colors, element) {
-  if (!element.style.fill) {
+  var fill = element.style.fill;
+  if (!fill) {
     element.style.fill = colors[1];
     return;
   }
-  if (element.style.fill) {
-    var currentColor = element.style.fill;
-    for (var i = 0, length = colors.length; i < length; i++) {
-      if (currentColor === colors[i]) {
-        element.style.fill = colors[i + 1];
+  for (var i = 0, length = colors.length; i < length; i++) {
+    if (fill === colors[i]) {
+      fill = colors[i + 1];
+      if (i === length - 1) {
+        fill = colors[0];
       }
-      if (currentColor === colors[i] && i === length - 1) {
-        element.style.fill = colors[0];
-      }
+      element.style.fill = fill;
+      return;
     }
   }
 }
 /**
  * Функция, изменяющая фоновый цвет элемента
- * @param {string[]} element - массив цветов
- * @param {object} colors - DOM-элемент
+ * @param {string[]} colors - массив цветов
+ * @param {object} element - DOM-элемент
  */
-function changeElementBackgroundColor(element, colors) {
+function changeElementBackgroundColor(colors, element) {
   if (currentFireballColorIndex < fireballColorsLength - 1) {
     currentFireballColorIndex++;
     element.style.backgroundColor = colors[currentFireballColorIndex];
@@ -94,9 +86,9 @@ function changeElementBackgroundColor(element, colors) {
 userName.required = true;
 userName.maxLength = 50;
 //  Открытие окна настройки персонажа по клику на иконку пользователя
-openSetupToggle.addEventListener('click', openSetup);
+openSetupToggle.addEventListener('click', toggleSetup);
 //  Закрытие окна настройки пресонажа по клику на кнопку закрытия
-closeSetupToggle.addEventListener('click', closeSetup);
+closeSetupToggle.addEventListener('click', toggleSetup);
 //  Изменение цвета накидки персонажа
 wizardCoat.addEventListener('click', function () {
   changeElementFill(wizardCoatColors, wizardCoat);
@@ -107,5 +99,5 @@ wizardEyes.addEventListener('click', function () {
 });
 //  Изменение цвета файербола
 fireball.addEventListener('click', function () {
-  changeElementBackgroundColor(fireball, fireballColors);
+  changeElementBackgroundColor(fireballColors, fireball);
 });
