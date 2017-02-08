@@ -47,26 +47,24 @@ function toggleSetup() {
   setupWindow.classList.toggle('invisible');
 }
 /**
- * Функия, изменяющая цвет <svg> элемента
+ * Функция, возвращающая новый цвет из массива цветов
  * @param {string[]} colors - массив цветов
- * @param {object} element - DOM-элемент
+ * @param {string} currentColor - текущий цвет элемента
+ * @return {string} - новый цвет элемента
  */
-function changeElementFill(colors, element) {
-  var fill = element.style.fill;
-  if (!fill) {
-    element.style.fill = colors[1];
-    return;
+function getNewColor(colors, currentColor) {
+  if (!currentColor) {
+    return colors[1];
   }
   for (var i = 0, length = colors.length; i < length; i++) {
-    if (fill === colors[i]) {
-      fill = colors[i + 1];
+    if (currentColor === colors[i]) {
       if (i === length - 1) {
-        fill = colors[0];
+        return colors[0];
       }
-      element.style.fill = fill;
-      return;
+      return colors[i + 1];
     }
   }
+  return currentColor;
 }
 /**
  * Функция, изменяющая фоновый цвет элемента
@@ -91,11 +89,11 @@ openSetupToggle.addEventListener('click', toggleSetup);
 closeSetupToggle.addEventListener('click', toggleSetup);
 //  Изменение цвета накидки персонажа
 wizardCoat.addEventListener('click', function () {
-  changeElementFill(wizardCoatColors, wizardCoat);
+  wizardCoat.style.fill = getNewColor(wizardCoatColors, wizardCoat.style.fill);
 });
 //  Изменение цвета глаз персонажа
 wizardEyes.addEventListener('click', function () {
-  changeElementFill(wizardEyesColors, wizardEyes);
+  wizardEyes.style.fill = getNewColor(wizardEyesColors, wizardEyes.style.fill);
 });
 //  Изменение цвета файербола
 fireball.addEventListener('click', function () {
