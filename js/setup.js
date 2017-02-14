@@ -65,8 +65,8 @@ function isKeyPressed(event, key) {
  * @param {boolean} windowVisibility - статус видимости окна после срабатывания функции
  */
 function toggleSetup(windowVisibility) {
-  setupWindow.classList.toggle(hiddenElementClass, windowVisibility);
-  if (!windowVisibility) {
+  setupWindow.classList.toggle(hiddenElementClass, !windowVisibility);
+  if (windowVisibility) {
     document.addEventListener('keydown', closeSetupWindowOnEscapeButton);
     setupWindow.setAttribute('aria-hidden', 'false');
     openSetupToggle.setAttribute('aria-pressed', 'true');
@@ -90,7 +90,7 @@ function toggleSetupWindowOnEnterButton(windowVisibility) {
 //  Функция, скрывающая диалоговое окно настройки персонажа по нажатию клавиши ESCAPE
 function closeSetupWindowOnEscapeButton() {
   if (event.target !== userName && isKeyPressed(event, ESCAPE_KEY_CODE)) {
-    toggleSetup(VISIBILITY_FLAG);
+    toggleSetup(!VISIBILITY_FLAG);
   }
 }
 /**
@@ -133,19 +133,19 @@ userName.maxLength = 50;
 
 //  Открытие окна настройки персонажа по клику на иконку профиля пользователя
 openSetupToggle.addEventListener('click', function () {
-  toggleSetup(!VISIBILITY_FLAG);
+  toggleSetup(VISIBILITY_FLAG);
 });
 //  Открытие окна настройки персонажа с помощью клавиши ENTER
 openSetupToggle.addEventListener('keydown', function () {
-  toggleSetupWindowOnEnterButton(!VISIBILITY_FLAG);
+  toggleSetupWindowOnEnterButton(VISIBILITY_FLAG);
 });
 //  Закрытие окна настройки персонажа по клику на кнопку Х
 closeSetupToggle.addEventListener('click', function () {
-  toggleSetup(VISIBILITY_FLAG);
+  toggleSetup(!VISIBILITY_FLAG);
 });
 //  Закрытие окна настройки персонажа при помощи клавиши ENTER при фокусе на кнопке Х
 closeSetupToggle.addEventListener('keydown', function () {
-  toggleSetupWindowOnEnterButton(VISIBILITY_FLAG);
+  toggleSetupWindowOnEnterButton(!VISIBILITY_FLAG);
 });
 //  Изменение цвета накидки персонажа
 wizardCoat.addEventListener('click', function () {
