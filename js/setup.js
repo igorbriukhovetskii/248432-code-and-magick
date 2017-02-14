@@ -1,6 +1,6 @@
 'use strict';
 //  Находим блок, по клику на который будет открываться окно настроек персонажа
-var openSetupToggle = document.querySelector('.setup-open img');
+var openSetupToggle = document.querySelector('.setup-open-icon');
 //  Находим блок по клику на который окно настроек персонажа будет закрываться
 var closeSetupToggle = document.querySelector('.setup-close');
 //  Выбираем окно настроек персонажа
@@ -48,9 +48,8 @@ var hiddenElementClass = 'invisible';
 //  Константы
 var ENTER_KEY_CODE = 13;
 var ESCAPE_KEY_CODE = 27;
-//  Флаги для переключения статуса окна настройки персонажа
-var WINDOW_IS_HIDDEN = true;
-var WINDOW_IS_VISIBLE = false;
+//  Флаг для переключения статуса окна настройки персонажа
+var VISIBILITY_FLAG = true;
 
 /**
  * Функция, проверяющая нажатие клавиши
@@ -91,7 +90,7 @@ function toggleSetupWindowOnEnterButton(windowVisibility) {
 //  Функция, скрывающая диалоговое окно настройки персонажа по нажатию клавиши ESCAPE
 function closeSetupWindowOnEscapeButton() {
   if (event.target !== userName && isKeyPressed(event, ESCAPE_KEY_CODE)) {
-    toggleSetup(WINDOW_IS_HIDDEN);
+    toggleSetup(VISIBILITY_FLAG);
   }
 }
 /**
@@ -134,19 +133,19 @@ userName.maxLength = 50;
 
 //  Открытие окна настройки персонажа по клику на иконку профиля пользователя
 openSetupToggle.addEventListener('click', function () {
-  toggleSetup(WINDOW_IS_VISIBLE);
+  toggleSetup(!VISIBILITY_FLAG);
 });
 //  Открытие окна настройки персонажа с помощью клавиши ENTER
 openSetupToggle.addEventListener('keydown', function () {
-  toggleSetupWindowOnEnterButton(WINDOW_IS_VISIBLE);
+  toggleSetupWindowOnEnterButton(!VISIBILITY_FLAG);
 });
 //  Закрытие окна настройки персонажа по клику на кнопку Х
 closeSetupToggle.addEventListener('click', function () {
-  toggleSetup(WINDOW_IS_HIDDEN);
+  toggleSetup(VISIBILITY_FLAG);
 });
 //  Закрытие окна настройки персонажа при помощи клавиши ENTER при фокусе на кнопке Х
 closeSetupToggle.addEventListener('keydown', function () {
-  toggleSetupWindowOnEnterButton(WINDOW_IS_HIDDEN);
+  toggleSetupWindowOnEnterButton(VISIBILITY_FLAG);
 });
 //  Изменение цвета накидки персонажа
 wizardCoat.addEventListener('click', function () {
