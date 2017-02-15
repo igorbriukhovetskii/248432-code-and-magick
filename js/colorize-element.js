@@ -7,7 +7,7 @@
  * @param {string} property - наименование CSS свойства
  */
 window.colorizeElement = function (element, colors, property) {
-  function setRandomColor(element, colors, property) {
+  function setRandomColor() {
     var currentColor = element.style[property];
     element.style[property] = window.utils.getRandomElementExcept(colors, currentColor);
   }
@@ -16,8 +16,8 @@ window.colorizeElement = function (element, colors, property) {
   });
 
   element.addEventListener('keydown', function (event) {
-    if (isKeyPressed(event, ENTER_KEY_CODE)) {
+    if (window.isKeyPressed(event, window.ENTER_KEY_CODE)) {
       setRandomColor(element, colors, property);
     }
-  })
+  });
 };

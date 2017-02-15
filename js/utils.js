@@ -30,7 +30,7 @@ window.utils = {
   getRandomElementExcept: function (array, currentColor) {
     var newColor;
 
-    while (!newColor || newColor === currentColor ) {
+    while (!newColor || newColor === currentColor) {
       newColor = window.utils.getRandomElement(array);
       if (newColor.indexOf('#') !== -1) {
         newColor = window.utils.translateHexToRGB(newColor);

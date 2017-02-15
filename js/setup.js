@@ -112,6 +112,6 @@ closeSetupToggle.addEventListener('keydown', function () {
 //  Изменение цвета накидки персонажа
 window.colorizeElement(wizardCoat, wizardCoatColors, 'fill');
 //  Изменение цвета глаз персонажа
-window.colorizeElement(wizardEyes, wizardCoatColors, 'fill');
+window.colorizeElement(wizardEyes, wizardEyesColors, 'fill');
 //  Изменение цвета файербола
 window.colorizeElement(fireball, fireballColors, 'background');
