@@ -38,10 +38,6 @@ var fireballColors = [
   '#e848d5',
   '#e6e848'
 ];
-//  Индекс элемента массива, содержащего текущий цвет файербола
-var currentFireballColorIndex = 0;
-//  Вычисление длины массива цветов файербола
-var fireballColorsLength = fireballColors.length;
 //  Класс, скрывающий элемент на странице
 var hiddenElementClass = 'invisible';
 
@@ -93,40 +89,6 @@ function closeSetupWindowOnEscapeButton() {
     toggleSetup(!VISIBILITY_FLAG);
   }
 }
-/**
- * Функция, возвращающая новый цвет из массива цветов
- * @param {string[]} colors - массив цветов
- * @param {string} currentColor - текущий цвет элемента
- * @return {string} - новый цвет элемента
- */
-function getNewColor(colors, currentColor) {
-  if (!currentColor) {
-    return colors[1];
-  }
-  for (var i = 0, length = colors.length; i < length; i++) {
-    if (currentColor === colors[i]) {
-      if (i === length - 1) {
-        return colors[0];
-      }
-      return colors[i + 1];
-    }
-  }
-  return currentColor;
-}
-/**
- * Функция, изменяющая фоновый цвет элемента
- * @param {string[]} colors - массив цветов
- * @param {Object} element - DOM-элемент
- */
-function changeElementBackgroundColor(colors, element) {
-  if (currentFireballColorIndex < fireballColorsLength - 1) {
-    currentFireballColorIndex++;
-    element.style.backgroundColor = colors[currentFireballColorIndex];
-  } else {
-    currentFireballColorIndex = 0;
-    element.style.backgroundColor = colors[currentFireballColorIndex];
-  }
-}
 //  Ограничение минимального и максимального количества символов в имени персонажа
 userName.required = true;
 userName.maxLength = 50;
@@ -148,14 +110,8 @@ closeSetupToggle.addEventListener('keydown', function () {
   toggleSetupWindowOnEnterButton(!VISIBILITY_FLAG);
 });
 //  Изменение цвета накидки персонажа
-wizardCoat.addEventListener('click', function () {
-  wizardCoat.style.fill = getNewColor(wizardCoatColors, wizardCoat.style.fill);
-});
+window.colorizeElement(wizardCoat, wizardCoatColors, 'fill');
 //  Изменение цвета глаз персонажа
-wizardEyes.addEventListener('click', function () {
-  wizardEyes.style.fill = getNewColor(wizardEyesColors, wizardEyes.style.fill);
-});
+window.colorizeElement(wizardEyes, wizardCoatColors, 'fill');
 //  Изменение цвета файербола
-fireball.addEventListener('click', function () {
-  changeElementBackgroundColor(fireballColors, fireball);
-});
+window.colorizeElement(fireball, fireballColors, 'background');
