@@ -1,6 +1,6 @@
 'use strict';
 //  Находим блок, по клику на который будет открываться окно настроек персонажа
-var openSetupToggle = document.querySelector('.setup-open');
+var openSetupToggle = document.querySelector('.setup-open-icon');
 //  Находим блок по клику на который окно настроек персонажа будет закрываться
 var closeSetupToggle = document.querySelector('.setup-close');
 //  Выбираем окно настроек персонажа
@@ -42,9 +42,56 @@ var fireballColors = [
 var currentFireballColorIndex = 0;
 //  Вычисление длины массива цветов файербола
 var fireballColorsLength = fireballColors.length;
-//  Функция, открывающая/закрывающая окно настройки пресонажа
-function toggleSetup() {
-  setupWindow.classList.toggle('invisible');
+//  Класс, скрывающий элемент на странице
+var hiddenElementClass = 'invisible';
+
+//  Константы
+var ENTER_KEY_CODE = 13;
+var ESCAPE_KEY_CODE = 27;
+//  Флаг для переключения статуса окна настройки персонажа
+var VISIBILITY_FLAG = true;
+
+/**
+ * Функция, проверяющая нажатие клавиши
+ * @param {Object} event - клавиатурное событие
+ * @param {number} key - код клавишы
+ * @return {boolean}
+ */
+function isKeyPressed(event, key) {
+  return event.keyCode && event.keyCode === key;
+}
+/**
+ * Функция, показывающая/скрывающая диалоговое окно настройки персонажа
+ * @param {boolean} windowVisibility - статус видимости окна после срабатывания функции
+ */
+function toggleSetup(windowVisibility) {
+  setupWindow.classList.toggle(hiddenElementClass, !windowVisibility);
+  if (windowVisibility) {
+    document.addEventListener('keydown', closeSetupWindowOnEscapeButton);
+    setupWindow.setAttribute('aria-hidden', 'false');
+    openSetupToggle.setAttribute('aria-pressed', 'true');
+    closeSetupToggle.setAttribute('aria-pressed', 'false');
+  } else {
+    document.removeEventListener('keydown', closeSetupWindowOnEscapeButton);
+    setupWindow.setAttribute('aria-hidden', 'true');
+    openSetupToggle.setAttribute('aria-pressed', 'false');
+    closeSetupToggle.setAttribute('aria-pressed', 'true');
+  }
+}
+/**
+ * Функция, показывающая/скрывающая диалоговое окно настройки персонажа по нажатию клавиши ENTER
+ * @param {boolean} windowVisibility - статус видимости окна после срабатывания функции
+ */
+function toggleSetupWindowOnEnterButton(windowVisibility) {
+  if (isKeyPressed(event, ENTER_KEY_CODE)) {
+    toggleSetup(windowVisibility);
+  }
+}
+//  Функция, скрывающая диалоговое окно настройки персонажа по нажатию клавиши ESCAPE
+function closeSetupWindowOnEscapeButton() {
+  if (event.target !== userName && isKeyPressed(event, ESCAPE_KEY_CODE)) {
+    toggleSetup(!VISIBILITY_FLAG);
+  }
 }
 /**
  * Функция, возвращающая новый цвет из массива цветов
@@ -69,7 +116,7 @@ function getNewColor(colors, currentColor) {
 /**
  * Функция, изменяющая фоновый цвет элемента
  * @param {string[]} colors - массив цветов
- * @param {object} element - DOM-элемент
+ * @param {Object} element - DOM-элемент
  */
 function changeElementBackgroundColor(colors, element) {
   if (currentFireballColorIndex < fireballColorsLength - 1) {
@@ -83,10 +130,23 @@ function changeElementBackgroundColor(colors, element) {
 //  Ограничение минимального и максимального количества символов в имени персонажа
 userName.required = true;
 userName.maxLength = 50;
-//  Открытие окна настройки персонажа по клику на иконку пользователя
-openSetupToggle.addEventListener('click', toggleSetup);
-//  Закрытие окна настройки пресонажа по клику на кнопку закрытия
-closeSetupToggle.addEventListener('click', toggleSetup);
+
+//  Открытие окна настройки персонажа по клику на иконку профиля пользователя
+openSetupToggle.addEventListener('click', function () {
+  toggleSetup(VISIBILITY_FLAG);
+});
+//  Открытие окна настройки персонажа с помощью клавиши ENTER
+openSetupToggle.addEventListener('keydown', function () {
+  toggleSetupWindowOnEnterButton(VISIBILITY_FLAG);
+});
+//  Закрытие окна настройки персонажа по клику на кнопку Х
+closeSetupToggle.addEventListener('click', function () {
+  toggleSetup(!VISIBILITY_FLAG);
+});
+//  Закрытие окна настройки персонажа при помощи клавиши ENTER при фокусе на кнопке Х
+closeSetupToggle.addEventListener('keydown', function () {
+  toggleSetupWindowOnEnterButton(!VISIBILITY_FLAG);
+});
 //  Изменение цвета накидки персонажа
 wizardCoat.addEventListener('click', function () {
   wizardCoat.style.fill = getNewColor(wizardCoatColors, wizardCoat.style.fill);
