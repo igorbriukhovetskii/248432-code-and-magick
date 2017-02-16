@@ -41,21 +41,9 @@ var fireballColors = [
 //  Класс, скрывающий элемент на странице
 var hiddenElementClass = 'invisible';
 
-//  Константы
-var ENTER_KEY_CODE = 13;
-var ESCAPE_KEY_CODE = 27;
 //  Флаг для переключения статуса окна настройки персонажа
 var VISIBILITY_FLAG = true;
 
-/**
- * Функция, проверяющая нажатие клавиши
- * @param {Object} event - клавиатурное событие
- * @param {number} key - код клавишы
- * @return {boolean}
- */
-function isKeyPressed(event, key) {
-  return event.keyCode && event.keyCode === key;
-}
 /**
  * Функция, показывающая/скрывающая диалоговое окно настройки персонажа
  * @param {boolean} windowVisibility - статус видимости окна после срабатывания функции
@@ -79,13 +67,13 @@ function toggleSetup(windowVisibility) {
  * @param {boolean} windowVisibility - статус видимости окна после срабатывания функции
  */
 function toggleSetupWindowOnEnterButton(windowVisibility) {
-  if (isKeyPressed(event, ENTER_KEY_CODE)) {
+  if (window.utils.isKeyPressed(event, window.utils.ENTER_KEY_CODE)) {
     toggleSetup(windowVisibility);
   }
 }
 //  Функция, скрывающая диалоговое окно настройки персонажа по нажатию клавиши ESCAPE
 function closeSetupWindowOnEscapeButton() {
-  if (event.target !== userName && isKeyPressed(event, ESCAPE_KEY_CODE)) {
+  if (event.target !== userName && window.utils.isKeyPressed(event, window.utils.ESCAPE_KEY_CODE)) {
     toggleSetup(!VISIBILITY_FLAG);
   }
 }
