@@ -67,13 +67,13 @@ function toggleSetup(windowVisibility) {
  * @param {boolean} windowVisibility - статус видимости окна после срабатывания функции
  */
 function toggleSetupWindowOnEnterButton(windowVisibility) {
-  if (window.utils.isKeyPressed(event, window.utils.ENTER_KEY_CODE)) {
+  if (window.utils.isActivateEvent(event)) {
     toggleSetup(windowVisibility);
   }
 }
 //  Функция, скрывающая диалоговое окно настройки персонажа по нажатию клавиши ESCAPE
 function closeSetupWindowOnEscapeButton() {
-  if (event.target !== userName && window.utils.isKeyPressed(event, window.utils.ESCAPE_KEY_CODE)) {
+  if (event.target !== userName && window.utils.isDeactivateEvent(event)) {
     toggleSetup(!VISIBILITY_FLAG);
   }
 }
