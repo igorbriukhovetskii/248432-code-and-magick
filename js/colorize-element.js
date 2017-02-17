@@ -1,6 +1,6 @@
 'use strict';
 
-window.colorizeElement = (function() {
+window.colorizeElement = (function () {
   /**
    * Функция возвращает случайный цвет из массива возможных цветов
    * @param {Object} element - DOM-элемент
