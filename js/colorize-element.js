@@ -2,14 +2,13 @@
 
 window.colorizeElement = (function () {
   /**
-   * Функция возвращает случайный цвет из массива возможных цветов
+   * Функция задаёт элементу новый случайный цвет из массива возможных цветов
    * @param {Object} element - DOM-элемент
    * @param {string[]} colors - массив возможных цветов элемента
    * @param {string} property - наименование CSS свойства
-   * @return {string} - новое значение цвета элемента
    */
-  var getRandomColor = function (element, colors, property) {
-    return window.utils.getRandomElementExcept(colors, element.style[property]);
+  var setRandomColor = function (element, colors, property) {
+    element.style[property] = window.utils.getRandomElementExcept(colors, element.style[property]);
   };
 
   /**
@@ -20,7 +19,7 @@ window.colorizeElement = (function () {
    */
   var setColorOnClick = function (element, colors, property) {
     element.addEventListener('click', function () {
-      element.style[property] = getRandomColor(element, colors, property);
+      setRandomColor(element, colors, property);
     });
   };
 
@@ -33,7 +32,7 @@ window.colorizeElement = (function () {
   var setColorOnKeydown = function (element, colors, property) {
     element.addEventListener('keydown', function (event) {
       if (window.utils.isActivateEvent(event)) {
-        element.style[property] = getRandomColor(element, colors, property);
+        setRandomColor(element, colors, property);
       }
     });
   };
